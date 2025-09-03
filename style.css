@@ -71,6 +71,12 @@ h1 {
     max-width:250px;
     font-family:'Hepta Slab', Helvetica, Arial;
     margin:0 auto 50px auto;
+    padding: 10px;
+}
+.pizza-item:hover {
+    transition: all ease .2s;
+    background-color: #ffffff12;
+    border-radius: 10px;
 }
 .pizza-item a {
     display:flex;
@@ -94,7 +100,7 @@ h1 {
     height:50px;
     line-height:50px;
     border-radius:25px;
-    background-color:#620fa2;
+    background-color:#65a20f;
     text-align:center;
     color:#FFF;
     font-size:22px;
@@ -103,7 +109,7 @@ h1 {
     transition:all ease .2s;
 }
 .pizza-item a:hover .pizza-item--add {
-    background-color:#521085;
+    background-color:#4e7d0c;
 }
 .pizza-item--price {
     font-size:15px;
