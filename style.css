@@ -64,7 +64,7 @@ h1 {
 }
 .pizza-area {
     display:grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
 }
 .pizza-item {
     text-align: center;

@@ -17,6 +17,11 @@ pizzaJson.map((item, index) => {
     // O parâmetro true indica que será um deep clone (clona também os elementos filhos)
     let pizzaItem = c(".models .pizza-item").cloneNode(true);
 
+    pizzaItem.querySelector(".pizza-item--name").innerHTML = item.name;
+    pizzaItem.querySelector(".pizza-item--desc").innerHTML = item.description;
+    pizzaItem.querySelector(".pizza-item--price").innerHTML = `R$ ${item.price.toFixed(2)}`;
+    pizzaItem.querySelector(".pizza-item--img img").src = item.img;
+
     // Adiciona o clone criado à área de pizzas no DOM
     c(".pizza-area").append(pizzaItem);
 });
