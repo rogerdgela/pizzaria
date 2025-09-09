@@ -392,6 +392,8 @@ h1 {
     font-size: 28px;
     /* Espaçamento à direita */
     margin-right: 30px;
+    /* Cor preta */
+    color: #000;
 }
 /* Área de controle de quantidade */
 .pizzaInfo--qtarea {

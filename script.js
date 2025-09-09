@@ -10,6 +10,8 @@ const cAll = (el) => {
     return document.querySelectorAll(el);
 };
 
+let modalQt = 1; // Quantidade de pizzas no modal
+
 // Itera sobre o array pizzaJson usando map
 // Para cada pizza no array, cria um clone do template e adiciona na área de pizzas
 pizzaJson.map((item, index) => {
@@ -20,16 +22,39 @@ pizzaJson.map((item, index) => {
     pizzaItem.setAttribute("data-key", index); // Adiciona um atributo data-key com o índice da pizza
     pizzaItem.querySelector(".pizza-item--name").innerHTML = item.name;
     pizzaItem.querySelector(".pizza-item--desc").innerHTML = item.description;
-    pizzaItem.querySelector(".pizza-item--price").innerHTML = `R$ ${item.price.toFixed(2)}`;
+    pizzaItem.querySelector(
+        ".pizza-item--price"
+    ).innerHTML = `R$ ${item.price.toFixed(2)}`;
     pizzaItem.querySelector(".pizza-item--img img").src = item.img;
     pizzaItem.querySelector("a").addEventListener("click", (e) => {
-        e.preventDefault();
+        e.preventDefault(); // Evita o comportamento padrão do link
+        modalQt = 1; // Reseta a quantidade de pizzas no modal para 1
+        let key = e.target.closest(".pizza-item").getAttribute("data-key"); // Pega o índice da pizza clicada
 
-        let key = e.target.closest(".pizza-item").getAttribute("data-key");
-
+        // Preenche as informações do modal com os dados da pizza clicada
         c(".pizzaBig img").src = pizzaJson[key].img;
         c(".pizzaWindowArea .pizzaInfo h1").innerHTML = pizzaJson[key].name;
-        c(".pizzaWindowArea .pizzaInfo--desc").innerHTML = pizzaJson[key].description;
+        c(".pizzaWindowArea .pizzaInfo--desc").innerHTML =
+            pizzaJson[key].description;
+        c(
+            ".pizzaWindowArea .pizzaInfo--actualPrice"
+        ).innerHTML = `R$ ${pizzaJson[key].price.toFixed(2)}`;
+        // Remove a classe selected do tamanho anteriormente selecionado
+        c(".pizzaInfo--size.selected").classList.remove("selected");
+
+        // Itera sobre todos os tamanhos disponíveis
+        cAll(".pizzaInfo--size").forEach((size, sizeIndex, array) => {
+            // Verifica se é o último item do array (maior tamanho)
+            if (sizeIndex === array.length - 1) {
+                size.classList.add("selected");
+            }
+
+            // Atualiza o texto do tamanho com o valor do JSON
+            size.querySelector("span").innerHTML =
+                pizzaJson[key].sizes[sizeIndex];
+        });
+
+        c(".pizzaInfo--qt").innerHTML = modalQt;
 
         c(".pizzaWindowArea").style.opacity = 0;
         // Abre o modal de detalhes da pizza
