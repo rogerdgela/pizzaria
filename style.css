@@ -306,6 +306,7 @@ h1 {
 .pizzaInfo h1 {
     /* Espaçamento superior */
     margin-top: 50px;
+    color: #000;
 }
 
 /* Descrição da pizza no modal */

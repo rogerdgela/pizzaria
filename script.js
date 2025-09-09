@@ -17,6 +17,7 @@ pizzaJson.map((item, index) => {
     // O parâmetro true indica que será um deep clone (clona também os elementos filhos)
     let pizzaItem = c(".models .pizza-item").cloneNode(true);
 
+    pizzaItem.setAttribute("data-key", index); // Adiciona um atributo data-key com o índice da pizza
     pizzaItem.querySelector(".pizza-item--name").innerHTML = item.name;
     pizzaItem.querySelector(".pizza-item--desc").innerHTML = item.description;
     pizzaItem.querySelector(".pizza-item--price").innerHTML = `R$ ${item.price.toFixed(2)}`;
@@ -24,8 +25,13 @@ pizzaJson.map((item, index) => {
     pizzaItem.querySelector("a").addEventListener("click", (e) => {
         e.preventDefault();
 
+        let key = e.target.closest(".pizza-item").getAttribute("data-key");
+
+        c(".pizzaBig img").src = pizzaJson[key].img;
+        c(".pizzaWindowArea .pizzaInfo h1").innerHTML = pizzaJson[key].name;
+        c(".pizzaWindowArea .pizzaInfo--desc").innerHTML = pizzaJson[key].description;
+
         c(".pizzaWindowArea").style.opacity = 0;
-        
         // Abre o modal de detalhes da pizza
         c(".pizzaWindowArea").style.display = "flex";
 
