@@ -111,3 +111,33 @@ function closeModal() {
 cAll(".pizzaInfo--cancelButton,.pizzaInfo--cancelMobileButton").forEach((item) => {
     item.addEventListener("click", closeModal)
 });
+
+// Adiciona um event listener ao botão de diminuir quantidade
+c(".pizzaInfo--qtmenos").addEventListener("click", () => {
+    // Verifica se a quantidade atual é maior que 1 para não permitir valores menores que 1
+    if (modalQt > 1) {
+        // Decrementa a variável que controla a quantidade do modal
+        modalQt--;
+        // Atualiza o valor exibido na interface para refletir a nova quantidade
+        c(".pizzaInfo--qt").innerHTML = modalQt;
+    }
+});
+
+// Adiciona um event listener ao botão de aumentar quantidade
+c(".pizzaInfo--qtmais").addEventListener("click", () => {
+    // Incrementa a variável que controla a quantidade do modal
+    modalQt++;
+    // Atualiza o valor exibido na interface para refletir a nova quantidade
+    c(".pizzaInfo--qt").innerHTML = modalQt;
+});
+
+// Seleciona todos os elementos que representam os tamanhos de pizza
+cAll(".pizzaInfo--size").forEach((size) => {
+    // Para cada elemento de tamanho, adiciona um ouvinte de evento de clique
+    size.addEventListener("click", () => {
+        // Ao clicar, remove a classe 'selected' do tamanho atualmente selecionado
+        c(".pizzaInfo--size.selected").classList.remove("selected");
+        // Em seguida, adiciona a classe 'selected' ao tamanho que foi clicado
+        size.classList.add("selected");
+    });
+});
