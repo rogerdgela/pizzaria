@@ -6,7 +6,7 @@
 /* Estilos globais do corpo da página */
 body {
     /* Fundo preto */
-    background-color: #000000;
+    background: linear-gradient(135deg, #1f1636 0%, #09001b 100%);
     /* Define a família de fontes principal */
     font-family: "Lato", Helvetica, Arial;
     /* Tamanho base da fonte */
@@ -37,7 +37,7 @@ header {
     /* Altura fixa do header */
     height: 60px;
     /* Cor de fundo azul */
-    background-color: #399ade;
+    background-color: #09001b;
     /* Inicialmente oculto */
     display: none;
     /* Alinhamento do conteúdo */
@@ -51,7 +51,7 @@ header {
     margin-right: 15px;
     font-size: 26px;
     /* Estilo visual */
-    background-color: #a9dcff;
+    background-color: #3d3c3c;
     padding: 5px 20px;
     border-radius: 5px;
 }
@@ -457,6 +457,18 @@ h1 {
     display: inline-block;
     /* Cursor pointer */
     cursor: pointer;
+    color: #fff;
+    background-color: #c72d2d;
+    padding: 20px 30px;
+    margin-right: 30px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all ease 0.2s;
+}
+/* Efeito hover no botão de cancelar */
+.pizzaInfo--cancelButton:hover {
+    /* Cor mais escura ao passar o mouse */
+    background-color: #a32d2d;
 }
 
 /* Botão de cancelar para mobile */
@@ -469,6 +481,12 @@ h1 {
     line-height: 40px;
     /* Espaçamento inferior */
     margin-bottom: 30px;
+    color: #fff;
+    background-color: #c72d2d;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all ease 0.2s;
+    width: 100px;
 }
 
 /* Container do carrinho */
