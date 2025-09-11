@@ -15,6 +15,12 @@ const cAll = (el) => {
 // Variável que armazena a quantidade de pizzas selecionadas no modal
 let modalQt = 1;
 
+// Variável que armazena o carrinho de compras
+let cart = [];
+
+// Variável que armazena a chave da pizza selecionada no modal
+let modalKey = 0;
+
 // Percorre o array pizzaJson e para cada pizza executa a função de renderização
 pizzaJson.map((item, index) => {
     // Clona o template do item de pizza presente em .models
@@ -43,6 +49,7 @@ pizzaJson.map((item, index) => {
 
         // Reseta a quantidade do modal para 1 sempre que abrir
         modalQt = 1;
+        modalKey = index;
 
         // Obtém o índice da pizza clicada através do atributo data-key
         let key = e.target.closest(".pizza-item").getAttribute("data-key");
@@ -140,4 +147,18 @@ cAll(".pizzaInfo--size").forEach((size) => {
         // Em seguida, adiciona a classe 'selected' ao tamanho que foi clicado
         size.classList.add("selected");
     });
+});
+
+c(".pizzaInfo--addButton").addEventListener("click", () => {
+    let size = c(".pizzaInfo--size.selected").getAttribute("data-key");
+    cart.push({
+        id: pizzaJson[modalKey].id,
+        size: parseInt(size),
+        qt: modalQt,
+        name: pizzaJson[modalKey].name,
+        price: pizzaJson[modalKey].price,
+        img: pizzaJson[modalKey].img,
+    });
+
+    closeModal();
 });
