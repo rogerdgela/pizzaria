@@ -49,7 +49,7 @@ pizzaJson.map((item, index) => {
 
         // Reseta a quantidade do modal para 1 sempre que abrir
         modalQt = 1;
-        
+
         // Atualiza a variável modalKey com o índice da pizza clicada
         modalKey = index;
 
@@ -173,35 +173,70 @@ c(".pizzaInfo--addButton").addEventListener("click", () => {
     closeModal();
 });
 
-// Função para atualizar a exibição do carrinho
+// Função principal que atualiza a visualização do carrinho de compras
 function updateCart() {
-    
-    // Verifica se existem itens no carrinho
+    // Verifica se o carrinho tem pelo menos um item
     if (cart.length > 0) {
-        // Se houver itens, mostra o carrinho adicionando a classe 'show'
+        // Torna o carrinho visível adicionando a classe 'show' ao elemento aside
         c("aside").classList.add("show");
-        // Limpa o conteúdo atual do carrinho
+        // Limpa todo o conteúdo atual do carrinho para nova renderização
         c(".cart").innerHTML = "";
 
-        // Percorre todos os itens do carrinho
-        for (let i in cart) {
-            // Log para debug do item atual
-            console.log(cart[i]);
-            // Clona o template do item do carrinho
-            let pizzaItem = c(".models .cart--item").cloneNode(true);
-            // Cria o nome da pizza com o tamanho
-            let pizzaName = `${cart[i].name} (${cart[i].size}g)`;
-            // Define a imagem do item
-            pizzaItem.querySelector("img").src = cart[i].img;
-            // Define o nome do item
-            pizzaItem.querySelector(".cart--item-nome").innerHTML = pizzaName;
-            // Define a quantidade do item
-            pizzaItem.querySelector(".cart--item--qt").innerHTML = cart[i].qt;
-            // Adiciona o item ao carrinho
-            c(".cart").append(pizzaItem);
-        }
+        // Array para armazenar itens do carrinho após agrupamento
+        let groupedCart = [];
+        // Percorre cada item do carrinho atual
+        cart.forEach(item => {
+            // Procura se já existe um item idêntico (mesma pizza e tamanho) no carrinho agrupado
+            let existing = groupedCart.find(x => x.id === item.id && x.size === item.size);
+            // Se encontrar um item idêntico, apenas soma a quantidade
+            if (existing) {
+                existing.qt += item.qt;
+            } else {
+                // Se não encontrar, adiciona como novo item no carrinho agrupado
+                groupedCart.push({...item});
+            }
+        });
+
+        // Percorre cada item do carrinho agrupado para renderizar na interface
+        groupedCart.forEach(cartItem => {
+            // Encontra os detalhes completos da pizza no array pizzaJson usando o ID
+            let pizzaItem = pizzaJson.find(item => item.id === cartItem.id);
+
+            // Clona o template do item do carrinho para criar um novo elemento
+            let cartItemElement = c(".models .cart--item").cloneNode(true);
+
+            // Variável para armazenar o nome do tamanho da pizza
+            let pizzaSizeName;
+            // Define o nome do tamanho baseado no código (0=P, 1=M, 2=G)
+            switch (cartItem.size) {
+                case 0:
+                    pizzaSizeName = "P";
+                    break;
+                case 1:
+                    pizzaSizeName = "M";
+                    break;
+                case 2:
+                    pizzaSizeName = "G";
+                    break;
+            }
+            // Cria o nome completo da pizza incluindo o tamanho
+            let pizzaName = `${pizzaItem.name} (${pizzaSizeName})`;
+
+            // Define a imagem do item no carrinho
+            cartItemElement.querySelector("img").src = pizzaItem.img;
+            // Define o nome da pizza com o tamanho no item do carrinho
+            cartItemElement.querySelector(".cart--item-nome").innerHTML = pizzaName;
+            // Define a quantidade do item no carrinho
+            cartItemElement.querySelector(".cart--item--qt").innerHTML = cartItem.qt;
+
+            // Adiciona o elemento do item criado ao carrinho
+            c(".cart").append(cartItemElement);
+        });
+
+        // Atualiza o array original do carrinho com os itens agrupados
+        cart = groupedCart;
     } else {
-        // Se não houver itens, esconde o carrinho removendo a classe 'show'
+        // Se o carrinho estiver vazio, esconde o elemento aside removendo a classe 'show'
         c("aside").classList.remove("show");
     }
 }
