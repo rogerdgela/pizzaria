@@ -49,6 +49,8 @@ pizzaJson.map((item, index) => {
 
         // Reseta a quantidade do modal para 1 sempre que abrir
         modalQt = 1;
+        
+        // Atualiza a variável modalKey com o índice da pizza clicada
         modalKey = index;
 
         // Obtém o índice da pizza clicada através do atributo data-key
