@@ -149,16 +149,57 @@ cAll(".pizzaInfo--size").forEach((size) => {
     });
 });
 
+// Adiciona um event listener ao botão de adicionar ao carrinho
 c(".pizzaInfo--addButton").addEventListener("click", () => {
+    // Obtém o tamanho selecionado da pizza através do atributo data-key
     let size = c(".pizzaInfo--size.selected").getAttribute("data-key");
+    
+    // Adiciona um novo item ao array do carrinho com todas as informações da pizza
     cart.push({
-        id: pizzaJson[modalKey].id,
-        size: parseInt(size),
-        qt: modalQt,
-        name: pizzaJson[modalKey].name,
-        price: pizzaJson[modalKey].price,
-        img: pizzaJson[modalKey].img,
+        id: pizzaJson[modalKey].id,       // ID da pizza
+        size: parseInt(size),             // Tamanho da pizza (convertido para número)
+        qt: modalQt,                      // Quantidade selecionada
+        name: pizzaJson[modalKey].name,   // Nome da pizza
+        price: pizzaJson[modalKey].price, // Preço da pizza
+        img: pizzaJson[modalKey].img,     // Caminho da imagem da pizza
     });
 
+    // Atualiza a exibição do carrinho
+    updateCart();
+
+    // Fecha o modal após adicionar ao carrinho
     closeModal();
 });
+
+// Função para atualizar a exibição do carrinho
+function updateCart() {
+    
+    // Verifica se existem itens no carrinho
+    if (cart.length > 0) {
+        // Se houver itens, mostra o carrinho adicionando a classe 'show'
+        c("aside").classList.add("show");
+        // Limpa o conteúdo atual do carrinho
+        c(".cart").innerHTML = "";
+
+        // Percorre todos os itens do carrinho
+        for (let i in cart) {
+            // Log para debug do item atual
+            console.log(cart[i]);
+            // Clona o template do item do carrinho
+            let pizzaItem = c(".models .cart--item").cloneNode(true);
+            // Cria o nome da pizza com o tamanho
+            let pizzaName = `${cart[i].name} (${cart[i].size}g)`;
+            // Define a imagem do item
+            pizzaItem.querySelector("img").src = cart[i].img;
+            // Define o nome do item
+            pizzaItem.querySelector(".cart--item-nome").innerHTML = pizzaName;
+            // Define a quantidade do item
+            pizzaItem.querySelector(".cart--item--qt").innerHTML = cart[i].qt;
+            // Adiciona o item ao carrinho
+            c(".cart").append(pizzaItem);
+        }
+    } else {
+        // Se não houver itens, esconde o carrinho removendo a classe 'show'
+        c("aside").classList.remove("show");
+    }
+}

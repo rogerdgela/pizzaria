@@ -75,7 +75,7 @@ header {
 /* Barra lateral (carrinho) */
 aside {
     /* Cor de fundo azul claro */
-    background-color: #9ccbe6;
+    background-color: #000000;
     /* Inicialmente com largura 0 */
     width: 0vw;
     /* Fonte específica para o carrinho */
@@ -557,9 +557,9 @@ h1 {
 .cart--totalitem {
     /* Espaçamento e borda */
     padding: 15px 0;
-    border-top: 1px solid #79b9dd;
+    border-top: 1px solid #2f028a;
     /* Estilo do texto */
-    color: #315970;
+    color: #f6f6f6;
     font-size: 15px;
     /* Layout flexível com espaçamento */
     display: flex;
