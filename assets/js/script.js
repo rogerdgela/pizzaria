@@ -183,6 +183,9 @@ c(".pizzaInfo--addButton").addEventListener("click", () => {
 
 // Função principal que atualiza a visualização do carrinho de compras
 function updateCart() {
+    // Atualiza o indicador de quantidade de itens no ícone do carrinho para dispositivos móveis
+    c('.menu-openner span').innerHTML = cart.length;
+
     // Verifica se o carrinho tem pelo menos um item
     if (cart.length > 0) {
         // Torna o carrinho visível adicionando a classe 'show' ao elemento aside
@@ -289,6 +292,17 @@ function updateCart() {
         c('.total span:last-child').innerHTML = `R$ ${total.toFixed(2)}`;
     } else {
         // Se o carrinho estiver vazio, esconde o elemento aside removendo a classe 'show'
-        c("aside").classList.remove("show");
+        c('aside').classList.remove("show");
+        c('aside').style.left = "100vw";
     }
 }
+
+c('.menu-openner').addEventListener('click', () => {
+    if (cart.length > 0) {
+        c('aside').style.left = '0';
+    }
+});
+
+c('.menu-closer').addEventListener('click', () => {
+    c('aside').style.left = '100vw';
+});

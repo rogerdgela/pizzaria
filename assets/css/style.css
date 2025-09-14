@@ -629,6 +629,15 @@ h1 {
     /* Mostra header */
     header {
         display: flex;
+        justify-content: space-between;
+    }
+
+    /* Nome do restaurante */
+    header .name {
+        font-size: 20px;
+        margin-left: 15px;
+        display: flex;
+        align-items: center;
     }
 
     /* Ajusta espaçamento do conteúdo principal */
