@@ -1,17 +1,43 @@
-# 🔧 Documentação Técnica - Códigos e Estruturas
+# 🔧 Documentação Técnica - Sistema de Pizzaria
 
 ## 📋 Índice
-1. [Estrutura HTML](#estrutura-html)
-2. [Estilos CSS](#estilos-css)
-3. [JavaScript](#javascript)
-4. [Base de Dados](#base-de-dados)
-5. [Fluxo de Dados](#fluxo-de-dados)
+
+1. [Estrutura do Projeto](#estrutura-do-projeto)
+2. [JavaScript Core](#javascript-core)
+3. [Sistema CSS](#sistema-css)
+4. [Dados das Pizzas](#dados-das-pizzas)
+5. [Funcionalidades](#funcionalidades)
 
 ---
 
-## 🏗️ Estrutura HTML
+## 🏗️ Estrutura do Projeto
 
-### Template System
+```
+pizzas/
+├── assets/
+│   ├── css/
+│   │   └── style.css     # Arquivo CSS com todos os estilos
+│   ├── images/
+│   │   ├── pizza.png     # Imagem da pizza Mussarela
+│   │   ├── pizza2.png    # Imagem da pizza Calabresa
+│   │   ├── pizza3.png    # Imagem da pizza Quatro Queijos
+│   │   ├── pizza4.png    # Imagem da pizza Americana
+│   │   ├── pizza5.png    # Imagem da pizza Sorvete
+│   │   ├── pizza6.png    # Imagem da pizza Moda da Casa
+│   │   └── pizza7.png    # Imagem da pizza Chocolate
+│   └── js/
+│       └── script.js     # Lógica JavaScript principal
+├── data/
+│   └── pizzas.js        # Base de dados das pizzas em JSON
+├── DOCUMENTACAO.md      # Documentação geral do projeto
+├── DOCUMENTACAO_TECNICA.md  # Documentação técnica detalhada
+└── index.html          # Página principal HTML
+```
+
+## Sistema JavaScript
+
+### Estrutura Principal
+
 O projeto utiliza um sistema de templates ocultos para clonagem dinâmica:
 
 ```html
@@ -26,7 +52,7 @@ O projeto utiliza um sistema de templates ocultos para clonagem dinâmica:
         <div class="pizza-item--name">--</div>
         <div class="pizza-item--desc">--</div>
     </div>
-    
+
     <!-- Template para item do carrinho -->
     <div class="cart--item">
         <img src="" />
@@ -41,12 +67,56 @@ O projeto utiliza um sistema de templates ocultos para clonagem dinâmica:
 ```
 
 ### Estrutura Principal
+
 ```html
 <body>
-    <header>           <!-- Cabeçalho mobile -->
-    <main>             <!-- Área principal com grid de pizzas -->
-    <aside>            <!-- Carrinho lateral -->
-    <div class="pizzaWindowArea"> <!-- Modal de detalhes -->
+    <!-- Cabeçalho mobile -->
+    <header>
+        <div class="menu-openner"><span>0</span>🛒</div>
+    </header>
+
+    <!-- Área principal com grid de pizzas -->
+    <main>
+        <h1>Nossas Pizzas</h1>
+        <div class="pizza-area"></div>
+    </main>
+
+    <!-- Carrinho lateral -->
+    <aside>
+        <div class="cart--area">
+            <div class="menu-closer">❌</div>
+            <h1>Suas Pizzas</h1>
+            <div class="cart"></div>
+            <div class="cart--details">
+                <div class="cart--totalitem subtotal">
+                    <span>Subtotal</span>
+                    <span>R$ --</span>
+                </div>
+                <div class="cart--totalitem desconto">
+                    <span>Desconto</span>
+                    <span>R$ --</span>
+                </div>
+                <div class="cart--totalitem total big">
+                    <span>Total</span>
+                    <span>R$ --</span>
+                </div>
+                <div class="cart--finalizar">Finalizar a compra</div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Modal de detalhes -->
+    <div class="pizzaWindowArea">
+        <div class="pizzaWindowBody">
+            <div class="pizzaInfo--cancelMobileButton">Voltar</div>
+            <div class="pizzaBig">
+                <img src="" />
+            </div>
+            <div class="pizzaInfo">
+                <!-- Detalhes da pizza -->
+            </div>
+        </div>
+    </div>
 </body>
 ```
 
@@ -54,17 +124,47 @@ O projeto utiliza um sistema de templates ocultos para clonagem dinâmica:
 
 ## 🎨 Estilos CSS
 
-### Sistema de Layout
+### Organização dos Estilos
 
-#### Grid Principal (Desktop)
+O projeto utiliza um único arquivo CSS (`assets/css/style.css`) que contém todos os estilos necessários, organizados nas seguintes seções:
+
+1. **Reset e Configurações Globais**
+
+    - Reset CSS básico
+    - Configurações de fonte (Hepta Slab e Lato)
+    - Variáveis CSS para cores e medidas
+
+2. **Componentes Principais**
+
+    - Estilos dos cards de pizza
+    - Modal de detalhes
+    - Carrinho lateral
+    - Botões e controles
+
+3. **Layout e Responsividade**
+    - Grid principal
+    - Header mobile
+    - Aside do carrinho
+    - Media queries para diferentes dispositivos
+
+````
+
+#### Sistema de Grid
+
 ```css
+/* Grid Principal (Desktop) */
 .pizza-area {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
 }
-```
+````
 
 #### Responsividade
+
 ```css
 /* Tablet */
 @media (max-width: 1000px) {
@@ -87,6 +187,7 @@ O projeto utiliza um sistema de templates ocultos para clonagem dinâmica:
 ### Componentes Principais
 
 #### Card de Pizza
+
 ```css
 .pizza-item {
     text-align: center;
@@ -104,10 +205,14 @@ O projeto utiliza um sistema de templates ocultos para clonagem dinâmica:
 ```
 
 #### Modal de Detalhes
+
 ```css
 .pizzaWindowArea {
     position: fixed;
-    left: 0; top: 0; bottom: 0; right: 0;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
     background-color: rgba(0, 0, 0, 0.7);
     display: none;
     transition: all ease 0.5s;
@@ -127,6 +232,7 @@ O projeto utiliza um sistema de templates ocultos para clonagem dinâmica:
 ```
 
 #### Carrinho Lateral
+
 ```css
 aside {
     background-color: #9ccbe6;
@@ -146,6 +252,7 @@ aside.show {
 ## 🧠 JavaScript
 
 ### Funções Auxiliares
+
 ```javascript
 // Seletor único - wrapper para querySelector
 const c = (el) => {
@@ -159,6 +266,7 @@ const cAll = (el) => {
 ```
 
 ### Variáveis Globais
+
 ```javascript
 let modalQt = 1; // Quantidade de pizzas no modal
 ```
@@ -166,29 +274,33 @@ let modalQt = 1; // Quantidade de pizzas no modal
 ### Geração Dinâmica do Catálogo
 
 #### Estrutura Principal
+
 ```javascript
 pizzaJson.map((item, index) => {
     // 1. Clonagem do template
     let pizzaItem = c(".models .pizza-item").cloneNode(true);
-    
+
     // 2. Configuração dos dados
     pizzaItem.setAttribute("data-key", index);
     pizzaItem.querySelector(".pizza-item--name").innerHTML = item.name;
     pizzaItem.querySelector(".pizza-item--desc").innerHTML = item.description;
-    pizzaItem.querySelector(".pizza-item--price").innerHTML = `R$ ${item.price.toFixed(2)}`;
+    pizzaItem.querySelector(
+        ".pizza-item--price"
+    ).innerHTML = `R$ ${item.price.toFixed(2)}`;
     pizzaItem.querySelector(".pizza-item--img img").src = item.img;
-    
+
     // 3. Event listener para abertura do modal
     pizzaItem.querySelector("a").addEventListener("click", (e) => {
         // Lógica do modal
     });
-    
+
     // 4. Inserção no DOM
     c(".pizza-area").append(pizzaItem);
 });
 ```
 
 #### Event Handler do Modal
+
 ```javascript
 pizzaItem.querySelector("a").addEventListener("click", (e) => {
     e.preventDefault();
@@ -198,12 +310,15 @@ pizzaItem.querySelector("a").addEventListener("click", (e) => {
     // Preenchimento das informações do modal
     c(".pizzaBig img").src = pizzaJson[key].img;
     c(".pizzaWindowArea .pizzaInfo h1").innerHTML = pizzaJson[key].name;
-    c(".pizzaWindowArea .pizzaInfo--desc").innerHTML = pizzaJson[key].description;
-    c(".pizzaWindowArea .pizzaInfo--actualPrice").innerHTML = `R$ ${pizzaJson[key].price.toFixed(2)}`;
-    
+    c(".pizzaWindowArea .pizzaInfo--desc").innerHTML =
+        pizzaJson[key].description;
+    c(".pizzaWindowArea .pizzaInfo--actualPrice").innerHTML = `R$ ${pizzaJson[
+        key
+    ].price.toFixed(2)}`;
+
     // Reset da seleção de tamanhos
     c(".pizzaInfo--size.selected").classList.remove("selected");
-    
+
     // Configuração dos tamanhos
     cAll(".pizzaInfo--size").forEach((size, sizeIndex, array) => {
         if (sizeIndex === array.length - 1) {
@@ -211,10 +326,10 @@ pizzaItem.querySelector("a").addEventListener("click", (e) => {
         }
         size.querySelector("span").innerHTML = pizzaJson[key].sizes[sizeIndex];
     });
-    
+
     // Atualização da quantidade
     c(".pizzaInfo--qt").innerHTML = modalQt;
-    
+
     // Animação de abertura
     c(".pizzaWindowArea").style.opacity = 0;
     c(".pizzaWindowArea").style.display = "flex";
@@ -224,25 +339,30 @@ pizzaItem.querySelector("a").addEventListener("click", (e) => {
 });
 ```
 
-### Análise de Performance
+### Core Features
 
-#### Otimizações Implementadas
-- **Template Cloning:** Evita criação manual de elementos
-- **Event Delegation:** Um listener por item (não por botão)
-- **CSS Transitions:** Animações via CSS (mais performáticas)
-- **Lazy Loading:** Imagens carregadas conforme necessário
+#### Funcionalidades Implementadas
 
-#### Pontos de Melhoria
-- **Event Delegation Global:** Usar um único listener no container pai
-- **Virtual DOM:** Para listas muito grandes
-- **Debouncing:** Para eventos de scroll/resize
-- **Image Optimization:** WebP, lazy loading nativo
+-   Sistema de templates dinâmicos para cards de pizza
+-   Carrinho de compras com gerenciamento de estado
+-   Modal de detalhes da pizza com seleção de tamanho
+-   Layout responsivo para diferentes dispositivos
+-   Sistema de preços com diferentes tamanhos
+
+#### Principais Componentes
+
+-   Cards de pizza com imagem e descrição
+-   Modal interativo para detalhes do produto
+-   Carrinho lateral com lista de itens
+-   Controles de quantidade com botões + e -
+-   Sistema de navegação mobile-friendly
 
 ---
 
 ## 📊 Base de Dados
 
 ### Estrutura do Objeto Pizza
+
 ```javascript
 {
     id: number,           // Identificador único (1-7)
@@ -255,6 +375,7 @@ pizzaItem.querySelector("a").addEventListener("click", (e) => {
 ```
 
 ### Exemplo de Registro
+
 ```javascript
 {
     id: 1,
@@ -267,17 +388,19 @@ pizzaItem.querySelector("a").addEventListener("click", (e) => {
 ```
 
 ### Padrões de Dados
-- **IDs:** Sequenciais de 1 a 7
-- **Preços:** Formato decimal com 2 casas (exceto alguns com valores inteiros)
-- **Tamanhos:** Primeira pizza tem "100g", demais começam com "320g"
-- **Imagens:** Nomenclatura sequencial (pizza.png, pizza2.png, etc.)
-- **Descrições:** Textos marketing de aproximadamente 70-80 caracteres
+
+-   **IDs:** Sequenciais de 1 a 7
+-   **Preços:** Formato decimal com 2 casas (exceto alguns com valores inteiros)
+-   **Tamanhos:** Primeira pizza tem "100g", demais começam com "320g"
+-   **Imagens:** Nomenclatura sequencial (pizza.png, pizza2.png, etc.)
+-   **Descrições:** Textos marketing de aproximadamente 70-80 caracteres
 
 ---
 
 ## 🔄 Fluxo de Dados
 
 ### 1. Inicialização
+
 ```
 index.html carrega
     ↓
@@ -291,6 +414,7 @@ DOM é populado dinamicamente
 ```
 
 ### 2. Interação do Usuário
+
 ```
 Usuário clica em pizza
     ↓
@@ -304,24 +428,27 @@ Animação de abertura
 ```
 
 ### 3. Estados da Aplicação
+
 ```javascript
 // Estados possíveis
 const AppStates = {
-    LOADING: 'loading',        // Carregando dados
-    CATALOG: 'catalog',        // Visualizando catálogo
-    MODAL_OPEN: 'modal_open',  // Modal de detalhes aberto
-    CART_OPEN: 'cart_open'     // Carrinho aberto (mobile)
+    LOADING: "loading", // Carregando dados
+    CATALOG: "catalog", // Visualizando catálogo
+    MODAL_OPEN: "modal_open", // Modal de detalhes aberto
+    CART_OPEN: "cart_open", // Carrinho aberto (mobile)
 };
 ```
 
 ### 4. Ciclo de Vida dos Componentes
 
 #### Pizza Card
+
 ```
 Template Clone → Data Binding → Event Binding → DOM Append → Ready
 ```
 
 #### Modal
+
 ```
 Hidden → Data Load → Fade In → Interactive → Fade Out → Hidden
 ```
@@ -333,28 +460,33 @@ Hidden → Data Load → Fade In → Interactive → Fade Out → Hidden
 ### Casos de Teste Sugeridos
 
 #### Teste de Renderização
+
 ```javascript
 // Verificar se todas as pizzas são renderizadas
-test('should render all pizzas', () => {
-    expect(document.querySelectorAll('.pizza-item').length).toBe(7);
+test("should render all pizzas", () => {
+    expect(document.querySelectorAll(".pizza-item").length).toBe(7);
 });
 ```
 
 #### Teste de Modal
+
 ```javascript
 // Verificar abertura do modal
-test('should open modal when pizza clicked', () => {
-    const pizzaCard = document.querySelector('.pizza-item');
-    pizzaCard.querySelector('a').click();
-    expect(document.querySelector('.pizzaWindowArea').style.display).toBe('flex');
+test("should open modal when pizza clicked", () => {
+    const pizzaCard = document.querySelector(".pizza-item");
+    pizzaCard.querySelector("a").click();
+    expect(document.querySelector(".pizzaWindowArea").style.display).toBe(
+        "flex"
+    );
 });
 ```
 
 #### Teste de Dados
+
 ```javascript
 // Verificar integridade dos dados
-test('should have valid pizza data', () => {
-    pizzaJson.forEach(pizza => {
+test("should have valid pizza data", () => {
+    pizzaJson.forEach((pizza) => {
         expect(pizza.id).toBeGreaterThan(0);
         expect(pizza.name).toBeTruthy();
         expect(pizza.price).toBeGreaterThan(0);
@@ -368,21 +500,24 @@ test('should have valid pizza data', () => {
 ## 📐 Padrões de Código
 
 ### Convenções de Nomenclatura
-- **Classes CSS:** BEM-like (`.pizza-item--name`)
-- **Variáveis JS:** camelCase (`modalQt`)
-- **Funções:** camelCase descritivo
-- **Constantes:** UPPER_CASE
+
+-   **Classes CSS:** BEM-like (`.pizza-item--name`)
+-   **Variáveis JS:** camelCase (`modalQt`)
+-   **Funções:** camelCase descritivo
+-   **Constantes:** UPPER_CASE
 
 ### Estrutura de Arquivos
+
 ```
 Separação por tipo:
 - HTML: Estrutura
-- CSS: Apresentação  
+- CSS: Apresentação
 - JS: Comportamento
 - Data: Informações
 ```
 
 ### Comentários
+
 ```javascript
 // Comentários explicativos em português
 // Descrevem o "porquê", não apenas o "o que"
